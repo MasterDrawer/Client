@@ -10,5 +10,5 @@
   <color name="divider">#BDBDBD</color>
 
 
-  <color name="starting_paint_color">#000000</color>
+  <color name="starting_paint_color">@color/colorAccent</color>
 </resources>

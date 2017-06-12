@@ -19,6 +19,7 @@
       android:layout_weight="0.1"
       android:background="@color/colorPrimaryLight"
       >
+
     <ImageView
         android:id="@+id/fragment_paint_color_picker_button"
         android:layout_width="40dp"
@@ -28,6 +29,16 @@
         android:background="@color/colorAccent"
         android:src="@android:drawable/ic_menu_edit"
         />
+
+    <SeekBar
+        android:id="@+id/fragment_paint_stroke_width_seekbar"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_marginRight="20dp"
+        android:maxHeight="1000dp"
+        />
+
 
   </LinearLayout>
 </LinearLayout>

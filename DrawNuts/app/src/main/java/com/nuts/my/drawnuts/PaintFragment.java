@@ -10,17 +10,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.SeekBar;
 import com.flask.colorpicker.ColorPickerView;
-import com.flask.colorpicker.OnColorSelectedListener;
 import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 
 public class PaintFragment extends Fragment {
 
+  public static final int SEEKBAR_MAX_VALUE = 100;
+  public static final int MAX_STROKE = 40;
+  public static final int MIN_STROKE = 1;
+
   private ImageView mColorPickerButton;
   private int mColor;
   private DrawingView mDrawingView;
+  private SeekBar mStrokeWidthSeekbar;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,29 @@ public class PaintFragment extends Fragment {
     View inflate = inflater.inflate(R.layout.fragment_paint, container, false);
     mColorPickerButton = (ImageView) inflate.findViewById(R.id.fragment_paint_color_picker_button);
     mDrawingView = (DrawingView) inflate.findViewById(R.id.fragment_paint_drawing_view);
+    mStrokeWidthSeekbar = (SeekBar) inflate.findViewById(R.id.fragment_paint_stroke_width_seekbar);
+
+    mStrokeWidthSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+      @Override
+      public void onProgressChanged(SeekBar seekBar, int currentValue, boolean fromUser) {
+        float proportionalValue = currentValue * 1.0f / SEEKBAR_MAX_VALUE;
+        float strokeValue = proportionalValue * (MAX_STROKE - MIN_STROKE) + MIN_STROKE;
+        mDrawingView.setStrokeWidth(strokeValue);
+      }
+
+      @Override
+      public void onStartTrackingTouch(SeekBar seekBar) {
+
+      }
+
+      @Override
+      public void onStopTrackingTouch(SeekBar seekBar) {
+
+      }
+    });
+
+    mStrokeWidthSeekbar.setProgress((int) (SEEKBAR_MAX_VALUE / 2.0));
+
     mColorPickerButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
@@ -52,24 +79,8 @@ public class PaintFragment extends Fragment {
         .initialColor(mColor)
         .wheelType(ColorPickerView.WHEEL_TYPE.FLOWER)
         .density(12)
-        .setOnColorSelectedListener(new OnColorSelectedListener() {
-          @Override
-          public void onColorSelected(int selectedColor) {
-            Toast.makeText(getContext(), "onColorSelected: 0x" + Integer.toHexString(selectedColor),
-                Toast.LENGTH_LONG).show();
-          }
-        })
-        .setPositiveButton("ok", new ColorPickerClickListener() {
-          @Override
-          public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
-            updateColor(selectedColor);
-          }
-        })
-        .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-          @Override
-          public void onClick(DialogInterface dialog, int which) {
-          }
-        })
+        .setPositiveButton("ok", new ColorPickerOkButtonListener())
+        .setNegativeButton("cancel", new DummyListener())
         .build()
         .show();
   }
@@ -79,5 +90,18 @@ public class PaintFragment extends Fragment {
     Drawable x = new ColorDrawable(mColor);
     mColorPickerButton.setBackground(x);
     mDrawingView.setColor(mColor);
+  }
+
+  private class ColorPickerOkButtonListener implements ColorPickerClickListener {
+    @Override
+    public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
+      updateColor(selectedColor);
+    }
+  }
+
+  private static class DummyListener implements DialogInterface.OnClickListener {
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+    }
   }
 }

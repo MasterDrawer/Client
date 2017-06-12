@@ -18,6 +18,7 @@ import android.view.View;
  */
 public class DrawingView extends View {
 
+  public static final int DEFAULT_WIDTH = 20;
   //drawing path
   private Path drawPath;
   //drawing and canvas paint
@@ -42,7 +43,7 @@ public class DrawingView extends View {
     drawPaint = new Paint();
     drawPaint.setColor(paintColor);
     drawPaint.setAntiAlias(true);
-    drawPaint.setStrokeWidth(20);
+    drawPaint.setStrokeWidth(DEFAULT_WIDTH);
     drawPaint.setStyle(Paint.Style.STROKE);
     drawPaint.setStrokeJoin(Paint.Join.ROUND);
     drawPaint.setStrokeCap(Paint.Cap.ROUND);
@@ -95,5 +96,9 @@ public class DrawingView extends View {
     invalidate();
     paintColor = newColor;
     drawPaint.setColor(paintColor);
+  }
+
+  public void setStrokeWidth(float widthInPixels) {
+    drawPaint.setStrokeWidth(widthInPixels);
   }
 }
