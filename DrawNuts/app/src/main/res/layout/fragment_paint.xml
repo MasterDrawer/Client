@@ -11,6 +11,7 @@
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:layout_weight="0.9"
+      android:background="@color/white"
       />
 
   <LinearLayout
@@ -21,7 +22,7 @@
       >
 
     <ImageView
-        android:id="@+id/fragment_paint_color_picker_button"
+        android:id="@+id/fragment_pencil_button"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="center"
@@ -30,15 +31,29 @@
         android:src="@android:drawable/ic_menu_edit"
         />
 
+      <ImageView
+          android:id="@+id/fragment_paint_color_picker_button"
+          android:layout_width="40dp"
+          android:layout_height="40dp"
+          android:layout_gravity="center"
+          android:layout_margin="4dp"
+          android:src="@drawable/ic_color_picker" />
     <SeekBar
         android:id="@+id/fragment_paint_stroke_width_seekbar"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         android:layout_marginRight="20dp"
+        android:layout_weight="0.6"
         android:maxHeight="1000dp"
         />
 
+      <ImageView
+          android:id="@+id/fragment_paint_eraser_button"
+          android:layout_width="40dp"
+          android:layout_height="40dp"
+          android:layout_gravity="center"
+          android:layout_margin="4dp"
+          android:src="@drawable/ic_eraser" />
 
   </LinearLayout>
 </LinearLayout>

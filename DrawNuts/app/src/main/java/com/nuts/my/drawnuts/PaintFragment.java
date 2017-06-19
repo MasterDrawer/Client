@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SeekBar;
+
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
@@ -21,7 +22,7 @@ public class PaintFragment extends Fragment {
   public static final int MAX_STROKE = 40;
   public static final int MIN_STROKE = 1;
 
-  private ImageView mColorPickerButton;
+    private ImageView mColorPickerButton, mEraserButton, mPencilButton;
   private int mColor;
   private DrawingView mDrawingView;
   private SeekBar mStrokeWidthSeekbar;
@@ -38,9 +39,10 @@ public class PaintFragment extends Fragment {
     // Inflate the layout for this fragment
     View inflate = inflater.inflate(R.layout.fragment_paint, container, false);
     mColorPickerButton = (ImageView) inflate.findViewById(R.id.fragment_paint_color_picker_button);
+      mEraserButton = (ImageView) inflate.findViewById(R.id.fragment_paint_eraser_button);
     mDrawingView = (DrawingView) inflate.findViewById(R.id.fragment_paint_drawing_view);
     mStrokeWidthSeekbar = (SeekBar) inflate.findViewById(R.id.fragment_paint_stroke_width_seekbar);
-
+      mPencilButton = (ImageView) inflate.findViewById(R.id.fragment_pencil_button);
     mStrokeWidthSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
       @Override
       public void onProgressChanged(SeekBar seekBar, int currentValue, boolean fromUser) {
@@ -61,13 +63,24 @@ public class PaintFragment extends Fragment {
     });
 
     mStrokeWidthSeekbar.setProgress((int) (SEEKBAR_MAX_VALUE / 2.0));
-
+      mEraserButton.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              mDrawingView.setColor(ContextCompat.getColor(getContext(), R.color.white));
+          }
+      });
     mColorPickerButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
         openColorPicker();
       }
     });
+      mPencilButton.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View view) {
+              mDrawingView.setColor(mColor);
+          }
+      });
 
     updateColor(ContextCompat.getColor(getContext(), R.color.starting_paint_color));
     return inflate;
@@ -92,16 +105,16 @@ public class PaintFragment extends Fragment {
     mDrawingView.setColor(mColor);
   }
 
-  private class ColorPickerOkButtonListener implements ColorPickerClickListener {
+    private static class DummyListener implements DialogInterface.OnClickListener {
     @Override
-    public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
-      updateColor(selectedColor);
+    public void onClick(DialogInterface dialog, int which) {
     }
   }
 
-  private static class DummyListener implements DialogInterface.OnClickListener {
+    private class ColorPickerOkButtonListener implements ColorPickerClickListener {
     @Override
-    public void onClick(DialogInterface dialog, int which) {
+    public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
+        updateColor(selectedColor);
     }
   }
 }

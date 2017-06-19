@@ -11,4 +11,5 @@
 
 
   <color name="starting_paint_color">@color/colorAccent</color>
+  <color name="white">#FFFFFF</color>
 </resources>
