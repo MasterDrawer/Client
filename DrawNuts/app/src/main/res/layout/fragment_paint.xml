@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.nuts.my.drawnuts.PaintFragment"
+    tools:context="com.nuts.my.drawnuts.app.drawings.PaintFragment"
     >
 
-  <com.nuts.my.drawnuts.DrawingView
+  <com.nuts.my.drawnuts.app.drawings.DrawingView
       android:id="@+id/fragment_paint_drawing_view"
       android:layout_width="match_parent"
       android:layout_height="0dp"

@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nuts.my.drawnuts.MainActivity"
+    tools:context="com.nuts.my.drawnuts.app.MainActivity"
     >
 
   <fragment
       android:id="@+id/paint_fragment_holder"
-      android:name="com.nuts.my.drawnuts.PaintFragment"
+      android:name="com.nuts.my.drawnuts.app.drawings.PaintFragment"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       tools:layout="@layout/fragment_paint"

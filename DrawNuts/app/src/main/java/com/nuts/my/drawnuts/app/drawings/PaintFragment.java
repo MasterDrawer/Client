@@ -1,4 +1,4 @@
-package com.nuts.my.drawnuts;
+package com.nuts.my.drawnuts.app.drawings;
 
 import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
@@ -17,6 +17,7 @@ import butterknife.OnClick;
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.builder.ColorPickerClickListener;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
+import com.nuts.my.drawnuts.R;
 
 public class PaintFragment extends Fragment {
 

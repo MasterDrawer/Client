@@ -1,4 +1,4 @@
-package com.nuts.my.drawnuts;
+package com.nuts.my.drawnuts.app.drawings;
 
 import android.content.Context;
 import android.graphics.Bitmap;
