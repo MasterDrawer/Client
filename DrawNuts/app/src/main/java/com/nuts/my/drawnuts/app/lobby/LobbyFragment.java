@@ -63,6 +63,7 @@ public class LobbyFragment extends Fragment {
   @OnClick(R.id.lobby_fab)
   public void onFabClicked() {
     ObjectCreator.getGamesRepository().addGame(generateGame());
+    gamesRecyclerView.smoothScrollToPosition(gamesAdapter.getItemCount() - 1);
   }
 
   private Game generateGame() {
