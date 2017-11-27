@@ -10,12 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.nuts.my.drawnuts.R;
 import com.nuts.my.drawnuts.app.ObjectCreator;
 import com.nuts.my.drawnuts.domain.Game;
 import com.nuts.my.drawnuts.domain.GamesRepository;
+import java.util.Random;
 
 public class LobbyFragment extends Fragment {
+
+  private GamesAdapter gamesAdapter;
+  private Random mRandom;
 
   public static LobbyFragment newInstance(String param1, String param2) {
     LobbyFragment fragment = new LobbyFragment();
@@ -43,16 +48,26 @@ public class LobbyFragment extends Fragment {
 
     initializeRecyclerViewLayout();
 
-    final GamesAdapter adapter = new GamesAdapter();
+    gamesAdapter = new GamesAdapter();
     ObjectCreator.getGamesRepository().addListener(new GamesRepository.Listener() {
       @Override
       public void onAdded(Game game) {
-        adapter.addGame(game);
+        gamesAdapter.addGame(game);
       }
     });
-    gamesRecyclerView.setAdapter(adapter);
+    gamesRecyclerView.setAdapter(gamesAdapter);
 
     return inflate;
+  }
+
+  @OnClick(R.id.lobby_fab)
+  public void onFabClicked() {
+    ObjectCreator.getGamesRepository().addGame(generateGame());
+  }
+
+  private Game generateGame() {
+    mRandom = new Random();
+    return new Game("Game " + mRandom.nextInt(10000));
   }
 
   private void initializeRecyclerViewLayout() {
