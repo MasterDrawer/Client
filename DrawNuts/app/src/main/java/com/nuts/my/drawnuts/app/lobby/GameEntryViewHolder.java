@@ -6,7 +6,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.nuts.my.drawnuts.R;
-import com.nuts.my.drawnuts.domain.Game;
+import com.nuts.my.drawnuts.domain.game.Game;
 
 class GameEntryViewHolder extends RecyclerView.ViewHolder {
 

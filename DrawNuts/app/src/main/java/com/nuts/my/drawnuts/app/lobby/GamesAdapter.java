@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import com.nuts.my.drawnuts.R;
-import com.nuts.my.drawnuts.domain.Game;
+import com.nuts.my.drawnuts.domain.game.Game;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.nuts.my.drawnuts.domain;
+package com.nuts.my.drawnuts.domain.game;
 
 public class Game {
 

@@ -13,8 +13,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.nuts.my.drawnuts.R;
 import com.nuts.my.drawnuts.app.ObjectCreator;
-import com.nuts.my.drawnuts.domain.Game;
-import com.nuts.my.drawnuts.domain.GamesRepository;
+import com.nuts.my.drawnuts.domain.game.Game;
+import com.nuts.my.drawnuts.domain.game.GamesRepository;
 import java.util.Random;
 
 public class LobbyFragment extends Fragment {
