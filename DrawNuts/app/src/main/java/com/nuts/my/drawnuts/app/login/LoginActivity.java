@@ -29,13 +29,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import com.nuts.my.drawnuts.R;
 import com.nuts.my.drawnuts.app.MainActivity;
-import com.nuts.my.drawnuts.app.ObjectCreator;
-import com.nuts.my.drawnuts.domain.user.User;
 import java.util.ArrayList;
 import java.util.List;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -66,6 +61,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
   private View mProgressView;
   private View mLoginFormView;
   private boolean mIsOngoingLogin;
+
+  private final UserAuthenticator mUserAuthenticator = new UserAuthenticator();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -193,31 +190,31 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
       // perform the user login attempt.
       showProgress(true);
       mIsOngoingLogin = true;
-      ObjectCreator.getLoginService()
-          .login(new User(email, password))
-          .enqueue(new Callback<Boolean>() {
-            @Override
-            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-              showProgress(false);
-              mIsOngoingLogin = false;
+      mUserAuthenticator.login(email, password, new UserAuthenticator.UserLoginCallback() {
+        @Override
+        public void onResponse(Boolean isAuthenticated) {
+          showProgress(false);
+          mIsOngoingLogin = false;
 
-              if (response.body()) {
-                startActivity(new Intent(getBaseContext(), MainActivity.class));
-              } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-              }
-            }
+          if (isAuthenticated) {
+            startActivity(new Intent(getBaseContext(), MainActivity.class));
+          } else {
+            mPasswordView.setError(getString(R.string.error_incorrect_password));
+            mPasswordView.requestFocus();
+          }
+        }
 
-            @Override
-            public void onFailure(Call<Boolean> call, Throwable t) {
-              showProgress(false);
-              mIsOngoingLogin = false;
+        @Override
+        public void onFailure(Throwable reason) {
+          showProgress(false);
+          mIsOngoingLogin = false;
 
-              Log.e(LoginActivity.class.getSimpleName(), "Failed authenticating with server", t.getCause());
-              Snackbar.make(LoginActivity.this.mEmailView, "Connection failed", Snackbar.LENGTH_SHORT).show();
-            }
-          });
+          Log.e(LoginActivity.class.getSimpleName(), "Failed authenticating with server",
+              reason.getCause());
+          Snackbar.make(LoginActivity.this.mEmailView, "Connection failed", Snackbar.LENGTH_SHORT)
+              .show();
+        }
+      });
     }
   }
 
