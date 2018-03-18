@@ -36,7 +36,7 @@ public class PaintFragment extends Fragment {
 	
 	{
 		try {
-			mSocket = IO.socket("http://localhost:5000");
+			mSocket = IO.socket("http://10.0.0.4:1234");
 		} catch (URISyntaxException e) {
 		}
 	}

@@ -22,9 +22,9 @@ public class GamesRepository {
 		games = new ArrayList<>();
 		listeners = new ArrayList<>();
 
-		games.add(new Game("Game 1"));
-		games.add(new Game("Game 2"));
-		games.add(new Game("Game 3"));
+		games.add(new Game("Game 1","Open"));
+		games.add(new Game("Game 2","Closed"));
+		games.add(new Game("Game 3","Waiting"));
 	}
 
 	public void addGame(Game game) {
