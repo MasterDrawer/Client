@@ -9,7 +9,7 @@
 
   <fragment
       android:id="@+id/paint_fragment_holder"
-      android:name="com.nuts.my.drawnuts.app.drawings.PaintFragment"
+      android:name="com.nuts.my.drawnuts.app.lobby.LobbyFragment"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       tools:layout="@layout/fragment_paint"

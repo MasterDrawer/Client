@@ -2,12 +2,15 @@ package com.nuts.my.drawnuts.app.lobby;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
@@ -23,8 +26,12 @@ import org.json.JSONObject;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class LobbyFragment extends Fragment {
+
+  private GamesAdapter gamesAdapter;
+  private Random mRandom;
 
   public static LobbyFragment newInstance(String param1, String param2) {
     LobbyFragment fragment = new LobbyFragment();
@@ -50,8 +57,16 @@ public class LobbyFragment extends Fragment {
     View inflate = inflater.inflate(R.layout.fragment_lobby, container, false);
     ButterKnife.bind(this, inflate);
 
-    gamesRecyclerView.setAdapter(new GamesAdapter());
+    initializeRecyclerViewLayout();
 
+    gamesAdapter = new GamesAdapter();
+    ObjectCreator.getGamesRepository().addListener(new GamesRepository.Listener() {
+      @Override
+      public void onAdded(Game game) {
+        gamesAdapter.addGame(game);
+      }
+    });
+    gamesRecyclerView.setAdapter(gamesAdapter);
     return inflate;
   }
 
@@ -101,19 +116,26 @@ public class LobbyFragment extends Fragment {
     private void addGame(String title, String state) {
       games.add(new Game(title,state));
     }
-    @Override
-    public GameEntryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-      return null;
-    }
 
-    @Override
-    public void onBindViewHolder(GameEntryViewHolder holder, int position) {
 
-    }
+    
 
-    @Override
-    public int getItemCount() {
-      return 0;
-    }
+  @OnClick(R.id.lobby_fab)
+  public void onFabClicked() {
+    ObjectCreator.getGamesRepository().addGame(generateGame());
+    gamesRecyclerView.smoothScrollToPosition(gamesAdapter.getItemCount() - 1);
+  }
+
+  private Game generateGame() {
+    mRandom = new Random();
+    return new Game("Game " + mRandom.nextInt(10000));
+  }
+
+  private void initializeRecyclerViewLayout() {
+    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+    gamesRecyclerView.setLayoutManager(layoutManager);
+    DividerItemDecoration dividerItemDecoration =
+        new DividerItemDecoration(gamesRecyclerView.getContext(), layoutManager.getOrientation());
+    gamesRecyclerView.addItemDecoration(dividerItemDecoration);
   }
 }
