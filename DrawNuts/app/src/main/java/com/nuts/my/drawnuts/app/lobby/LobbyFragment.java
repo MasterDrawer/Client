@@ -24,20 +24,24 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class LobbyFragment extends Fragment {
 
   private GamesAdapter gamesAdapter;
   private Random mRandom;
-
+	
+	private Socket mSocket;
+	{
+		try {
+			mSocket = IO.socket("http://10.0.0.4:1234");
+		} catch (URISyntaxException e) {
+		}
+	}
+	
   public static LobbyFragment newInstance(String param1, String param2) {
     LobbyFragment fragment = new LobbyFragment();
     Bundle args = new Bundle();
-    //args.putString(ARG_PARAM1, param1);
-    //args.putString(ARG_PARAM2, param2);
     fragment.setArguments(args);
     return fragment;
   }
@@ -45,8 +49,11 @@ public class LobbyFragment extends Fragment {
   @BindView(R.id.lobby_recycler_view)
   RecyclerView gamesRecyclerView;
 
+	
   public LobbyFragment() {
-    // Required empty public constructor
+    mSocket.connect();
+    mSocket.emit("GetGames");
+    mSocket.on("GetGames2",onNewGame);
   }
 
   @Override
@@ -69,25 +76,8 @@ public class LobbyFragment extends Fragment {
     gamesRecyclerView.setAdapter(gamesAdapter);
     return inflate;
   }
-
-  private class GamesAdapter extends RecyclerView.Adapter<GameEntryViewHolder> {
-
-    private final List<Game> games;
-  
-    private Socket mSocket;
-    {
-      try {
-        mSocket = IO.socket("http://10.0.0.4:1234");
-      } catch (URISyntaxException e) {
-      }
-    }
-    
-    public GamesAdapter() {
-      games = new ArrayList<>();
-      mSocket.connect();
-      mSocket.on("GetGames",onNewGame);
-    }
-  
+ 
+	
     private Emitter.Listener onNewGame = new Emitter.Listener() {
       @Override
       public void call(final Object... args) {
@@ -114,7 +104,7 @@ public class LobbyFragment extends Fragment {
     };
   
     private void addGame(String title, String state) {
-      games.add(new Game(title,state));
+	    this.gamesAdapter.addGame(new Game(title,state));
     }
 
 
@@ -128,14 +118,13 @@ public class LobbyFragment extends Fragment {
 
   private Game generateGame() {
     mRandom = new Random();
-    return new Game("Game " + mRandom.nextInt(10000));
+    return new Game("Game " + mRandom.nextInt(10000),"Open");
   }
 
   private void initializeRecyclerViewLayout() {
     LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
     gamesRecyclerView.setLayoutManager(layoutManager);
-    DividerItemDecoration dividerItemDecoration =
-        new DividerItemDecoration(gamesRecyclerView.getContext(), layoutManager.getOrientation());
+    DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(gamesRecyclerView.getContext(), layoutManager.getOrientation());
     gamesRecyclerView.addItemDecoration(dividerItemDecoration);
   }
 }
