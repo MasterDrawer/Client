@@ -15,15 +15,18 @@ import butterknife.OnClick;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
+import com.google.gson.Gson;
 import com.nuts.my.drawnuts.R;
 import com.nuts.my.drawnuts.app.ObjectCreator;
 import com.nuts.my.drawnuts.domain.Game;
 import com.nuts.my.drawnuts.domain.GamesRepository;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.net.URISyntaxException;
+import java.util.Dictionary;
 import java.util.Random;
 
 public class LobbyFragment extends Fragment {
@@ -84,12 +87,28 @@ public class LobbyFragment extends Fragment {
         getActivity().runOnUiThread(new Runnable() {
           @Override
           public void run() {
-            JSONObject data = (JSONObject) args[0];
-            String title;
-            String state;
+//            JSONObject data = (JSONObject) args[0];
+            Gson gson = new Gson();
+            JSONObject data = null;
             try {
-              title = data.getString("title");
-              state = data.getString("state");
+              data = new JSONObject(gson.toJson(args[0]));
+            } catch (JSONException e) {
+              e.printStackTrace();
+            }
+            JSONArray values;
+            JSONObject nameValuePairs = null;
+            JSONObject jsonNameValuePairs = null;
+            String title="game44";
+            String state="nostate";
+            try {
+              values = data.getJSONArray("values");
+              jsonNameValuePairs = (JSONObject)values.get(0);
+              nameValuePairs = jsonNameValuePairs.getJSONObject("nameValuePairs");
+//              for (int i = 0; i < values.length(); i++) {
+//
+//              }
+              title = (String)nameValuePairs.get("title");
+              state = (String)nameValuePairs.get("state");
             } catch (JSONException e) {
               return;
             }
