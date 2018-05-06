@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "337153960923",
+    "firebase_url": "https://drawnuts-627ee.firebaseio.com",
+    "project_id": "drawnuts-627ee",
+    "storage_bucket": "drawnuts-627ee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:337153960923:android:4dc4dc943320bf34",
+        "android_client_info": {
+          "package_name": "com.nuts.my.drawnuts"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "337153960923-051etp31mdflm06foegm1nbl8o3228ap.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nuts.my.drawnuts",
+            "certificate_hash": "4569023371b98f1d027617468e13f20794543008"
+          }
+        },
+        {
+          "client_id": "337153960923-4p3chs6ht2pv8j0dbo7mdr1i0bqb83i5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCay9toKW0VVzvDo-lUS7BNkK2EzYnyjd8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "337153960923-4p3chs6ht2pv8j0dbo7mdr1i0bqb83i5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
