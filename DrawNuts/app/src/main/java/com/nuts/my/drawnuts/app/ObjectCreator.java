@@ -1,23 +1,16 @@
 package com.nuts.my.drawnuts.app;
 
-import com.nuts.my.drawnuts.app.login.LoginService;
 import com.nuts.my.drawnuts.domain.game.GamesRepository;
 
 public class ObjectCreator {
 
-  private static GamesRepository gamesRepository;
-  private static LoginService loginService;
+    private static GamesRepository gamesRepository;
 
-  static {
-    gamesRepository = new GamesRepository();
-    loginService = LoginService.LoginServiceCreator.create("http://myServerUrl");
-  }
+    static {
+        gamesRepository = new GamesRepository();
+    }
 
-  public static GamesRepository getGamesRepository() {
-    return gamesRepository;
-  }
-
-  public static LoginService getLoginService() {
-    return loginService;
-  }
+    public static GamesRepository getGamesRepository() {
+        return gamesRepository;
+    }
 }

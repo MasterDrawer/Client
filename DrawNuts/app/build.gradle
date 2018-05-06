@@ -28,6 +28,10 @@ dependencies {
   //Firebase
   implementation 'com.google.firebase:firebase-core:15.0.2'
 
+  //Firebase-authentication
+  implementation 'com.google.firebase:firebase-auth:15.1.0'
+  implementation 'com.firebaseui:firebase-ui-auth:3.3.1'
+
   //Android support
   implementation 'com.android.support:appcompat-v7:26.1.0'
   implementation 'com.android.support.constraint:constraint-layout:1.1.0'
