@@ -13,8 +13,10 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.firebase.ui.common.ChangeEventType;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.nuts.my.drawnuts.R;
@@ -54,7 +56,6 @@ public class LobbyFragment extends Fragment {
     @OnClick(R.id.lobby_fab)
     public void onFabClicked() {
         addGame(generateGame());
-        scrollDown();
     }
 
     private void initializeRecyclerViewLayout() {
@@ -91,12 +92,23 @@ public class LobbyFragment extends Fragment {
                     .inflate(R.layout.game_lobby_list_item, parent, false);
                 return new GameEntryViewHolder(view);
             }
+
+            @Override
+            public void onChildChanged(@NonNull ChangeEventType type,
+                @NonNull DataSnapshot snapshot,
+                int newIndex,
+                int oldIndex) {
+                super.onChildChanged(type, snapshot, newIndex, oldIndex);
+                scrollToNewItems(type, newIndex);
+            }
+
+            private void scrollToNewItems(@NonNull ChangeEventType type, int newIndex) {
+                if (type == ChangeEventType.ADDED) {
+                    gamesRecyclerView.scrollToPosition(newIndex);
+                }
+            }
         };
         gamesRecyclerView.setAdapter(mFirebaseRecyclerAdapter);
-    }
-
-    private void scrollDown() {
-        gamesRecyclerView.smoothScrollToPosition(mFirebaseRecyclerAdapter.getItemCount() - 1);
     }
 
     private void addGame(Game game) {
