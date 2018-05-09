@@ -17,7 +17,7 @@
       android:layout_height="wrap_content"
       android:layout_gravity="bottom|end"
       android:layout_margin="24dp"
-      android:src="@drawable/ic_color_picker"
       app:fabSize="normal"
+      app:srcCompat="@drawable/ic_new"
       />
 </FrameLayout>
